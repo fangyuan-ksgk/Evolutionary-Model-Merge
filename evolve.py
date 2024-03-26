@@ -2,6 +2,7 @@ import random
 import subprocess
 import numpy as np
 import yaml
+from evaluator import get_info_from_json
 
 # The idea is that in merge.py we define a fixed 2-model merging process
 # And in evolve.py we define a function that evolves the merging configuration (between the 2 best-performing models)
@@ -58,6 +59,11 @@ def read_model_name():
 
 
 def evaluate_config(unique_id):
+
+    print("=================================")
+    print("         Begin Merging: ", unique_id)
+    print("=================================")
+
     # Merge according to the configuration, Evaluate the merged model with instruction dataset
     command = "ls"
     result = subprocess.run(command, check=True, stdout=subprocess.PIPE,
@@ -66,7 +72,6 @@ def evaluate_config(unique_id):
     # Evaluation requires running the merging process & Evaluation script
     # merge: modal run merge.py --config yaml_config 
     # note that the yaml_config is the string config that we have above
-    # TBD: addition of unique_id to create new model name
     command = ["modal", "run", "merge.py", "--unique-id", unique_id]
     result = subprocess.run(command, check=True, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE, text=True)
@@ -84,8 +89,15 @@ def evaluate_config(unique_id):
     command = ["modal", "run", "eval.py", "--model-id", f"{hf_user_name}/{model_name}"]
     result = subprocess.run(command, check=True, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE, text=True)
+    
+    print("=================================")
+    print("         Evaluation Complete")
+    print("=================================")
 
-    score = random.random()  # Placeholder for demonstration
+    # Get the score
+    info_list = get_info_from_json()
+    score = info_list[-1]["Average Perplexity"]
+
     return score
 
 # Honestly I feel like a LLM might have a better intuition on where things should be going, but this is also fine (??)
@@ -95,11 +107,12 @@ def evaluate_config(unique_id):
 def evolve_configs(population_size, generations):
     population = [generate_random_config() for _ in range(population_size)]
 
+
     for generation in range(generations):
         fitness_scores = [evaluate_config(unique_id) for unique_id in population]
 
-        # Select the best configurations based on fitness scores
-        best_configs = [config for _, config in sorted(zip(fitness_scores, population), reverse=True)][:population_size//2]
+        # Select the best configurations based on fitness scores, lower scores are better
+        best_configs = [config for _, config in sorted(zip(fitness_scores, population))][:population_size//2]
 
         # Generate new configurations by mutating the best ones
         new_configs = []

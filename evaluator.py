@@ -1,6 +1,6 @@
 import torch
 from tqdm import tqdm as tqdm
-import os
+import os, json
 
 # model_name = "xxx"
 
@@ -51,3 +51,22 @@ def evaluate_perplexity(model, tokenizer, dataset):
 
     return sum(perplexities) / len(perplexities)
 
+
+def save_info_to_json(info, file_path="./merge_info/info.json"):
+    os.makedirs("./merge_info", exist_ok=True)
+    try:
+        with open(file_path, "r") as file:
+            existing_data = json.load(file)
+    except FileNotFoundError:
+        existing_data = []
+    existing_data.append(info)
+    with open(file_path, "w") as file:
+        json.dump(existing_data, file, indent=4)
+
+def get_info_from_json(file_path="./merge_info/info.json"):
+    try:
+        with open(file_path, "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print("Info file not found.")
+        return []

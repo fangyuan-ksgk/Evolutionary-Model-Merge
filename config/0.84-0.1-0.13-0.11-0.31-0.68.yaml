@@ -1,0 +1,7 @@
+"\nslices:\n  - sources:\n      - model: liminerity/M7-7b\n        layer_range: [0,\
+  \ 32]\n      - model: AurelPx/Percival_01-7b-slerp\n        layer_range: [0, 32]\n\
+  merge_method: slerp\nbase_model: liminerity/M7-7b\nparameters:\n  t:\n    - filter:\
+  \ self_attn\n      value: [0.8413644319653231, 0.10248120582728815, 0.13416789689544872,\
+  \ 0.108657922231707, 0.3133641772135254]\n    - filter: mlp\n      value: [0.15863556803467693,\
+  \ 0.8975187941727119, 0.891342077768293, 0.891342077768293, 0.6866358227864746]\n\
+  \    - value: 0.6828621153561741\ndtype: bfloat16\nrandom_seed: 0\n    "

@@ -5,8 +5,8 @@ import torch
 from tqdm import tqdm
 from huggingface_hub import login
 import argparse
-from evaluator import format_prompt
-import os
+from evaluator import format_prompt, save_info_to_json, get_info_from_json
+import os, json
 
 login(os.environ["HF_TOKEN"])
 
@@ -78,19 +78,23 @@ def evaluate_perplexity(model_id, dataset_name):
 def main(model_id = "HuggingFaceH4/zephyr-7b-beta", 
          dataset_name = "Ksgk-fy/alignment-sft-test01"):
 
+    # Pass if evaluation already done for this model
+    if os.path.exists('./merge_info/merge_info.json'):
+        info_list = get_info_from_json()
+        model_exists = any(info["Model ID"] == model_id for info in info_list)
+        if model_exists:
+            print(f"Evaluation already done for model {model_id}. Skipping evaluation.")
+            return
+
     avg_perplexity = evaluate_perplexity.remote(model_id, dataset_name)
     print("Average Perplexity:", avg_perplexity)
-    info = {"Model ID": model_id, "Dataset Name": dataset_name, "Average Perplexity": avg_perplexity}
-
+    info = {"Model ID": model_id, "Dataset Name": dataset_name, "Average Perplexity": avg_perplexity.item()}
 
     os.makedirs("./merge_info", exist_ok=True)
 
-    # Save info to a text file
-    os.makedirs("./merge_info", exist_ok=True)
-    with open("./merge_info/info.txt", "a") as file:
-        file.write(str(info) + "\n")
+    # Save info to a JSON file
+    save_info_to_json(info, "./merge_info/merge_info.json")
+    
 
-    # # Save info to a text file
-    # os.makedirs("./merge_info", exist_ok=True)
-    # with open("./merge_info/info.txt", "w") as file:
-    #     file.write(str(info))
+    
+
