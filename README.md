@@ -22,6 +22,6 @@ modal run merge.py --unique_id
 ```
 As a experimental run, I've only scraped the top 2 performing 7B LLM from the open llm leaderboard, and SLERP merging is carried out only.
 
-
+Computation is done on the cloud, using Modal. 
 
 
