@@ -14,7 +14,7 @@ python evolve.py
 ```
 Evaluating fitness score of a LLM is done by computing the average perplexity score on a instruction-following dataset. I use a experimental one [Ksgk-fy/alignment-sft-test01]. Feel free to replace that with yours ;> Following code allows one to evaluate the model's performance. 
 ```
-modal run eval.py --model-id Mistral-7B-Instruct-v0.2
+modal run eval.py --model-id mistralai/Mistral-7B-Instruct-v0.2
 ```
 Model Merging with config is done through
 ```
