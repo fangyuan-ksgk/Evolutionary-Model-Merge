@@ -8,7 +8,19 @@ https://github.com/fangyuan-ksgk/Evolutionary-Model-Merge/assets/66006349/9750ba
 
 ![image](https://github.com/fangyuan-ksgk/Evolutionary-Model-Merge/assets/66006349/2b758f02-b5d1-4a41-8897-217021b8fa50)
 
-Firstly, one need to know how to evalute the fitness of a merged model. I use a instruction following dataset to score a model based on it's average complexity on providing the target answer. Feel free to change it to any other dataset you like. 
+To run your own evolutionary model merge optimizer, simply use
+```
+python evolve.py
+```
+Evaluating fitness score of a LLM is done by computing the average perplexity score on a instruction-following dataset. I use a experimental one [Ksgk-fy/alignment-sft-test01]. Feel free to replace that with yours ;> Following code allows one to evaluate the model's performance. 
+```
+modal run eval.py --model-id Mistral-7B-Instruct-v0.2
+```
+Model Merging with config is done through
+```
+modal run merge.py --unique_id
+```
+As a experimental run, I've only scraped the top 2 performing 7B LLM from the open llm leaderboard, and SLERP merging is carried out only.
 
 
 
