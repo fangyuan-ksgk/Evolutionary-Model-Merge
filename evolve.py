@@ -81,7 +81,7 @@ def evaluate_config(unique_id):
     # eval: modal run eval.py --model_name model_name
     # note that model_name is user_name/model_name in fact
     hf_user_name = "Ksgk-fy"
-    command = ["modal", "run", "eval.py", "--model-name", f"{hf_user_name}/{model_name}"]
+    command = ["modal", "run", "eval.py", "--model-id", f"{hf_user_name}/{model_name}"]
     result = subprocess.run(command, check=True, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE, text=True)
 
