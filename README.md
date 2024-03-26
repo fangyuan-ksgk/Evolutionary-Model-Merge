@@ -1,5 +1,5 @@
 # Evolutionary-Model-Merge
-Unofficial Implementation of Evolutionary Model Merging
+Unofficial Implementation of Evolutionary Model Merging ⭐
 * Inspired by work from Sakana.AI [Evolutionary Optimization of Model Merging Recipes] (https://arxiv.org/abs/2403.13187)
 * Built with reference on code from Maxime Labonne's code in AutoMerger, MergeKit, and of course, CLAUDE-3
 * Computation done on @Modal
@@ -8,7 +8,7 @@ https://github.com/fangyuan-ksgk/Evolutionary-Model-Merge/assets/66006349/9750ba
 
 ![image](https://github.com/fangyuan-ksgk/Evolutionary-Model-Merge/assets/66006349/2b758f02-b5d1-4a41-8897-217021b8fa50)
 
-To run your own evolutionary model merge optimizer, simply use
+To run your own evolutionary model merge optimizer ⭐
 ```
 python evolve.py
 ```
