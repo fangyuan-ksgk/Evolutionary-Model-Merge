@@ -3,7 +3,7 @@ from modal import Image, Stub, gpu
 from huggingface_hub import login
 import os
 
-HF_TOKEN = "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"
+HF_TOKEN = os.environ["HF_TOKEN"]
 login(HF_TOKEN)
 
 stub = modal.Stub(
