@@ -345,16 +345,20 @@ def load_config(file_path):
         config = yaml.load(file, Loader=yaml.FullLoader)
     return config
 
-@stub.function(cpu=8.0, memory=262144, timeout=1200)
+@stub.function(cpu=8.0, memory=262144, timeout=1200, secrets=[modal.Secret.from_name("ksgk-secret")])
 def merge_models_with_config(unique_id: str = "") -> str:
     """
     Merge models based on the given configuration.
     """
+    import os
+
     if not os.path.exists("data"):
         os.makedirs("data")
     if not os.path.exists("data/merge"):
         os.makedirs("data/merge")
     
+    HF_TOKEN = os.environ["HF_TOKEN"]
+
     api = HfApi(token=HF_TOKEN)
 
     create_dataset()
@@ -411,6 +415,9 @@ def main(unique_id: str = ""):
     model_name = merge_models_with_config.remote(unique_id)
 
     # Save the model name locally
+    import os
+    os.makedirs("./merge_info", exist_ok=True)
+    
     with open("./merge_info/model_name.txt", "w") as f:
         f.write(model_name)
 

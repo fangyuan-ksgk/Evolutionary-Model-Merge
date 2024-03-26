@@ -32,6 +32,7 @@ def evaluate_perplexity(model_id, dataset_name):
     from datasets import load_dataset
     from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments
     
+    print('Secrete HF_TOKEN:', os.environ["HF_TOKEN"])
     login(os.environ["HF_TOKEN"])
     model = AutoModelForCausalLM.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
