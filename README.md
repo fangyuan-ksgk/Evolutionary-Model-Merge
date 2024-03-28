@@ -24,4 +24,8 @@ As a experimental run, I've only scraped the top 2 performing 7B LLM from the op
 
 Computation is done on the cloud, using Modal. 
 
+Nest to try:
+
+https://towardsdatascience.com/create-mixtures-of-experts-with-mergekit-11b318c99562
+
 
